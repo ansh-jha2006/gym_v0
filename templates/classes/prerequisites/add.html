@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Prerequisite - Gym Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-title">Add Prerequisite to {{ workout_class.WorkoutClassName }}</h1>
+        <a href="{{ url_for('view_class', id=workout_class.WorkoutClassID) }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Class
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="requirement" class="form-label">Requirement</label>
+                    <input type="text" class="form-control" id="requirement" name="requirement" required>
+                    <div class="form-text">Enter a prerequisite for this class (e.g., "Minimum age 18", "Basic fitness level")</div>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">Add Prerequisite</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

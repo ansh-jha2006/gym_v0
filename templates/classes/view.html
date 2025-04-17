@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ workout_class.WorkoutClassName }} - Gym Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-title">{{ workout_class.WorkoutClassName }}</h1>
+        <div>
+            <a href="{{ url_for('edit_class', id=workout_class.WorkoutClassID) }}" class="btn btn-warning">
+                <i class="fas fa-edit me-2"></i>Edit
+            </a>
+            <a href="{{ url_for('classes') }}" class="btn btn-secondary ms-2">
+                <i class="fas fa-arrow-left me-2"></i>Back to Classes
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Class Details</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>ID:</th>
+                            <td>{{ workout_class.WorkoutClassID }}</td>
+                        </tr>
+                        <tr>
+                            <th>Name:</th>
+                            <td>{{ workout_class.WorkoutClassName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Gym:</th>
+                            <td>{{ workout_class.GymName }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Prerequisites</h5>
+                    <a href="{{ url_for('add_prerequisite', class_id=workout_class.WorkoutClassID) }}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus me-1"></i>Add Prerequisite
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if prerequisites %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Requirement</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prerequisite in prerequisites %}
+                                <tr>
+                                    <td>{{ prerequisite.PrerequisiteID }}</td>
+                                    <td>{{ prerequisite.Requirement }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePrerequisiteModal{{ prerequisite.PrerequisiteID }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="deletePrerequisiteModal{{ prerequisite.PrerequisiteID }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Confirm Delete</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete prerequisite: {{ prerequisite.Requirement }}?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form action="{{ url_for('delete_prerequisite', id=prerequisite.PrerequisiteID) }}" method="post">
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-center">No prerequisites found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Sessions</h5>
+                    <a href="{{ url_for('add_session', class_id=workout_class.WorkoutClassID) }}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus me-1"></i>Add Session
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if sessions %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Instructor</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for session in sessions %}
+                                <tr>
+                                    <td>{{ session.SessionDate }}</td>
+                                    <td>{{ session.StartTime }} - {{ session.EndTime }}</td>
+                                    <td>{{ session.FirstName }} {{ session.LastName }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteSessionModal{{ session.SessionID }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="deleteSessionModal{{ session.SessionID }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Confirm Delete</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this session?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form action="{{ url_for('delete_session', id=session.SessionID) }}" method="post">
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-center">No sessions found</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Equipment Requirements</h5>
+                    <a href="{{ url_for('add_equipment_requirement', class_id=workout_class.WorkoutClassID) }}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus me-1"></i>Add Equipment
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if equipment_requirements %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Equipment</th>
+                                    <th>Quantity</th>
+                                    <th>Gym</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for equipment in equipment_requirements %}
+                                <tr>
+                                    <td>{{ equipment.EquipmentName }}</td>
+                                    <td>{{ equipment.Quantity }}</td>
+                                    <td>{{ equipment.GymName }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEquipmentModal{{ equipment.RequirementID }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="deleteEquipmentModal{{ equipment.RequirementID }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Confirm Delete</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this equipment requirement?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form action="{{ url_for('delete_equipment_requirement', id=equipment.RequirementID) }}" method="post">
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-center">No equipment requirements found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

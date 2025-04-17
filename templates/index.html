@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Gym Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4">Welcome to Gym Management System</h1>
+            <p class="lead">Manage your gym operations efficiently with our comprehensive management system.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-users me-2"></i>Customers</h5>
+                    <p class="card-text">Manage customer information, memberships, and feedback.</p>
+                    <a href="{{ url_for('customers') }}" class="btn btn-primary">Go to Customers</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user-tie me-2"></i>Employees</h5>
+                    <p class="card-text">Manage employee information, certifications, and schedules.</p>
+                    <a href="{{ url_for('employees') }}" class="btn btn-primary">Go to Employees</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-pills me-2"></i>Supplements</h5>
+                    <p class="card-text">Manage supplement inventory, usage, and stock levels.</p>
+                    <a href="{{ url_for('supplements') }}" class="btn btn-primary">Go to Supplements</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-dumbbell me-2"></i>Gyms</h5>
+                    <p class="card-text">Manage gym locations, equipment, and facilities.</p>
+                    <a href="{{ url_for('gyms') }}" class="btn btn-primary">Go to Gyms</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-running me-2"></i>Classes</h5>
+                    <p class="card-text">Manage workout classes, schedules, and instructors.</p>
+                    <a href="{{ url_for('classes') }}" class="btn btn-primary">Go to Classes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-file-invoice-dollar me-2"></i>Billing</h5>
+                    <p class="card-text">Manage billing, payments, and financial records.</p>
+                    <a href="{{ url_for('billings') }}" class="btn btn-primary">Go to Billing</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

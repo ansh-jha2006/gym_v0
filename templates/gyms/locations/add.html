@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Location - Gym Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-title">Add Location to {{ gym.Name }}</h1>
+        <a href="{{ url_for('view_gym', id=gym.GymID) }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Gym
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="floor_number" class="form-label">Floor Number</label>
+                    <input type="number" class="form-control" id="floor_number" name="floor_number" required>
+                </div>
+                <div class="mb-3">
+                    <label for="room_name" class="form-label">Room Name</label>
+                    <input type="text" class="form-control" id="room_name" name="room_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">Add Location</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
